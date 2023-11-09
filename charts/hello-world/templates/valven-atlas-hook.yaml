@@ -18,6 +18,6 @@ spec:
           - sh
           - -c
           - |
-            echo "$XX {{ .Release.Name }}" && printenv
+            echo "$XX $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} {{ .Release.Name }}" && printenv
       restartPolicy: Never
   backoffLimit: 2
