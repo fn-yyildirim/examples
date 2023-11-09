@@ -14,16 +14,21 @@ spec:
       labels:
         {{- include "hello-world.selectorLabels" . | nindent 8 }}
     spec:
+      source:
+        helm:
+          parameters:
+            - name: xc
+              value: $ARGOCD_APP_NAME
       serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: 
             - sh
             - -c
             - |
-              echo "$XX $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} {{ .Release.Name }}" && printenv
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+              echo "$XX $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} $xc $$xc ${xc} {{ .Release.Name }}" && printenv
           ports:
             - name: http
               containerPort: 80
