@@ -15,6 +15,6 @@ spec:
           - sh
           - -c
           - |
-            echo "$V_TEST $$V_TEST {{ .Values.atlashook.name }} {{ .Release.Name }}" && printenv
+            echo "$V_TEST $$V_TEST {{ .Values.V_TEST }} {{ .Values.atlashook.name }} {{ .Release.Name }}" && printenv
       restartPolicy: Never
   backoffLimit: 2
