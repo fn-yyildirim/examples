@@ -17,6 +17,11 @@ spec:
       serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
+          command: 
+            - sh
+            - -c
+            - |
+              echo "$XX $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} {{ .Release.Name }}" && printenv
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
