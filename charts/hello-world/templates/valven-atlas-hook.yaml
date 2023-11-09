@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: valven-atlas-hook
+  generateName: valven-atlas-hook
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  template:
+    spec:
+      containers:
+      - name: valven-atlas-hook
+        image: alpine:latest
+        command:
+          - sh
+          - -c
+          - |
+            echo "$ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION" && printenv
+      restartPolicy: Never
+  backoffLimit: 2
