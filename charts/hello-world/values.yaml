@@ -11,7 +11,7 @@ image:
   tag: ""
 
 atlashook:
-  name: "asdf"
+  name: $$ARGOCD_APP_NAME
 
 nameOverride: ""
 fullnameOverride: ""
