@@ -11,10 +11,13 @@ spec:
       containers:
       - name: valven-atlas-hook
         image: alpine:latest
+        env:
+          - name: XX
+            value: $ARGOCD_APP_REVISION 
         command:
           - sh
           - -c
           - |
-            echo "{{ .Release.Name }}"
+            echo "$XX {{ .Release.Name }}" && printenv
       restartPolicy: Never
   backoffLimit: 2
