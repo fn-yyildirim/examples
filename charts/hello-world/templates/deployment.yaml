@@ -19,15 +19,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          helm:
-            parameters:
-              - name: xc
-                value: $ARGOCD_APP_NAME
           command: 
             - sh
             - -c
             - |
-              echo "$XX $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} $xc $$xc ${xc} {{ .Release.Name }}" && printenv
+              echo "{{ .Values.atlashook.name }} $xcxc $ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION ${ARGOCD_APP_REVISION} {{ .Release.Name }}" && printenv
           ports:
             - name: http
               containerPort: 80
