@@ -11,7 +11,26 @@ image:
   tag: ""
 
 atlashook:
-  name: $$ARGOCD_APP_NAME
+  name: $ARGOCD_APP_NAME
+
+global:
+  configs:
+    cmp:
+      plugins: 
+        my-plugin:
+          init:
+            command: [sh]
+            args: [-c, 'echo "Initializing..."']
+          generate:
+            command: [sh, -c]
+            args:
+              - |
+                echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
+          discover:
+            # fileName: "./subdir/s*.yaml"
+            find:
+              glob: "**/Chart.yaml"
+              command: [sh, -c, find . -name env.yaml]
 
 nameOverride: ""
 fullnameOverride: ""
