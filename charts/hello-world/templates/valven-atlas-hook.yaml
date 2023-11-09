@@ -15,6 +15,6 @@ spec:
           - sh
           - -c
           - |
-            echo "$ARGOCD_APP_REVISION $$ARGOCD_APP_REVISION" && printenv
+            echo "{{ .Release.Name }}"
       restartPolicy: Never
   backoffLimit: 2
